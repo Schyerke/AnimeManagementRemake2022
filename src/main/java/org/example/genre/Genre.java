@@ -1,5 +1,7 @@
 package org.example.genre;
 
+import java.util.Arrays;
+
 public enum Genre {
     ACTION("action"),
     ADVENTURE("adventure"),
@@ -25,12 +27,10 @@ public enum Genre {
     }
 
     public static Genre map(String genre){
-        for (Genre g : Genre.values()) {
-            if (g.genre().equals(genre)) {
-                return g;
-            }
-        }
-        return null;
+        return Arrays.stream(Genre.values())
+                .filter(g -> g.genre().equals(genre))
+                .findFirst()
+                .orElse(null);
     }
 
 }
