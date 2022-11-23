@@ -23,25 +23,11 @@ public enum MangaDatabase {
     }
 
     public Manga findByName(String name) {
-        for (Manga manga : mangas) {
-            if (manga.name().equals(name)) {
-                System.out.println("Found " + manga.name());
-                return manga;
-            }
-        }
-        System.out.println("No such manga");
-        return null;
+        return mangas.stream().filter(manga -> manga.name().equals(name)).findFirst().orElse(null);
     }
 
-    public void deleteByName(String name) {
-        Manga manga = findByName(name);
-        if (manga != null) {
-            mangas.remove(manga);
-            System.out.println("Manga deleted");
-        }
-        else {
-            System.out.println("No such manga");
-        }
+    public boolean deleteByName(String name) {
+        return mangas.removeIf(manga -> manga.name().equals(name));
     }
 
     public void deleteByManga(Manga manga) {

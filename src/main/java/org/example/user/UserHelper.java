@@ -18,14 +18,10 @@ public class UserHelper {
         List<Anime> animes = AnimeDatabase.INSTANCE.findAll();
 
         System.out.println("Mangas: ");
-        for (Manga manga : mangas) {
-            System.out.println(manga.name());
-        }
+        mangas.forEach(manga -> System.out.println(manga.name()));
 
         System.out.println("Animes: ");
-        for (Anime anime : animes) {
-            System.out.println(anime.name());
-        }
+        animes.forEach(anime -> System.out.println(anime.name()));
 
         System.out.println();
     }

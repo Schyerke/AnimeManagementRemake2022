@@ -17,12 +17,10 @@ public enum UserDatabase {
     }
 
     public User findByUsername(String username){
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                return user;
-            }
-        }
-        return null;
+        return users.stream()
+                .filter(user -> user.getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
     }
 
     public List<User> getUsers() {
@@ -30,20 +28,14 @@ public enum UserDatabase {
     }
 
     public User getUser(String username, char[] password) {
-        for (User user : users) {
-            if (user.getUsername().equals(username) && Arrays.equals(user.getPassword(), password)) {
-                return user;
-            }
-        }
-        return null;
+        return users.stream()
+                .filter(user -> user.getUsername().equals(username) && Arrays.equals(user.getPassword(), password))
+                .findFirst()
+                .orElse(null);
     }
 
     public boolean checkAlreadyExists(String username, String email) {
-        for (User user : users) {
-            if (user.getUsername().equals(username) || user.getEmail().equals(email)) {
-                return true;
-            }
-        }
-        return false;
+        return users.stream()
+                .anyMatch(user -> user.getUsername().equals(username) || user.getEmail().equals(email));
     }
 }

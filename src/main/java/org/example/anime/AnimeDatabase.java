@@ -13,14 +13,7 @@ public enum AnimeDatabase {
     }
 
     public Anime findByName(String name) {
-        for (Anime anime : animes) {
-            if (anime.name().equals(name)) {
-                System.out.println("Found " + anime.name());
-                return anime;
-            }
-        }
-        System.out.println("No such anime");
-        return null;
+        return animes.stream().filter(anime -> anime.name().equals(name)).findFirst().orElse(null);
     }
 
     public void save(Anime anime) {
@@ -31,25 +24,11 @@ public enum AnimeDatabase {
         System.out.println("Anime added");
     }
     public Anime findByName(Anime anime){
-        for (Anime _anime : animes) {
-            if (_anime.name().equals(anime.name())) {
-                System.out.println("Found " + _anime.name());
-                return _anime;
-            }
-        }
-        System.out.println("No such anime");
-        return null;
+        return animes.stream().filter(anime1 -> anime1.name().equals(anime.name())).findFirst().orElse(null);
     }
 
-    public void deleteByName(String name) {
-        Anime anime = findByName(name);
-        if (anime != null) {
-            animes.remove(anime);
-            System.out.println("Anime deleted");
-        }
-        else {
-            System.out.println("No such anime");
-        }
+    public boolean deleteByName(String name) {
+        return animes.removeIf(anime -> anime.name().equals(name));
     }
 
     public void deleteByAnime(Anime anime) {

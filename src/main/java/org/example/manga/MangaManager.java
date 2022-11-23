@@ -19,7 +19,11 @@ public enum MangaManager {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter manga name: ");
         String name = scanner.nextLine();
-        MangaDatabase.INSTANCE.deleteByName(name);
+        if(MangaDatabase.INSTANCE.deleteByName(name)){
+            System.out.println("Manga deleted");
+        } else {
+            System.out.println("No such manga");
+        }
     }
 
     private Manga createManga(){

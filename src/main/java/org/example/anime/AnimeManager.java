@@ -18,7 +18,11 @@ public enum AnimeManager {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter anime name: ");
         String name = scanner.nextLine();
-        AnimeDatabase.INSTANCE.deleteByName(name);
+        if(AnimeDatabase.INSTANCE.deleteByName(name)){
+            System.out.println("Anime deleted");
+        } else {
+            System.out.println("No such anime");
+        }
     }
 
     private Anime createAnime(){
