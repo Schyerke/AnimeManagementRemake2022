@@ -1,58 +1,60 @@
 package org.example.anime;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum AnimeDatabase {
     INSTANCE;
     // suppress this warning
-    private final Anime[] animes = new Anime[100];
-    private int animeCount;
+    private final List<Anime> animes = new ArrayList<>();
 
-    public Anime[] findAll(){
+    public List<Anime> findAll(){
         return animes;
     }
 
     public Anime findByName(String name) {
         for (Anime anime : animes) {
             if (anime.name().equals(name)) {
+                System.out.println("Found " + anime.name());
                 return anime;
             }
         }
+        System.out.println("No such anime");
         return null;
     }
 
     public void save(Anime anime) {
-        animes[animeCount++] = anime;
+        if (findByName(anime.name()) != null) {
+            throw new IllegalArgumentException("Anime already in database");
+        }
+        animes.add(anime);
+        System.out.println("Anime added");
     }
     public Anime findByName(Anime anime){
-        for (Anime a : animes) {
-            if (a.name().equals(anime.name())) {
-                return a;
+        for (Anime _anime : animes) {
+            if (_anime.name().equals(anime.name())) {
+                System.out.println("Found " + _anime.name());
+                return _anime;
             }
         }
+        System.out.println("No such anime");
         return null;
     }
 
     public void deleteByName(String name) {
-        for (int i = 0; i < animeCount; i++) {
-            Anime anime = animes[i];
-            if (anime.name().equals(name)) {
-                animes[i] = animes[animeCount - 1];
-                animes[animeCount - 1] = null;
-                animeCount--;
-                return;
-            }
+        Anime anime = findByName(name);
+        if (anime != null) {
+            animes.remove(anime);
+            System.out.println("Anime deleted");
+        }
+        else {
+            System.out.println("No such anime");
         }
     }
 
     public void deleteByAnime(Anime anime) {
-        for (int i = 0; i < animeCount; i++) {
-            Anime a = animes[i];
-            if (a.equals(anime)) {
-                animes[i] = animes[animeCount - 1];
-                animes[animeCount - 1] = null;
-                animeCount--;
-                return;
-            }
-        }
+        animes.remove(anime);
+        System.out.println("Anime deleted");
     }
 
 }

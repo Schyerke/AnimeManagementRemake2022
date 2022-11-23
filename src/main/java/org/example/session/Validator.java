@@ -10,7 +10,7 @@ public class Validator {
     }
 
     public static boolean isPasswordValid(char[] password) {
-        return String.valueOf(password).matches("^[a-zA-Z0-9_-]$");
+        return true;
     }
 
     public static boolean isEmailValid(String email) {

@@ -24,4 +24,13 @@ public enum Genre {
         return genre;
     }
 
+    public static Genre map(String genre){
+        for (Genre g : Genre.values()) {
+            if (g.genre().equals(genre)) {
+                return g;
+            }
+        }
+        return null;
+    }
+
 }

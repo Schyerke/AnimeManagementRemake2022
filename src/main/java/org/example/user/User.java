@@ -15,9 +15,6 @@ public abstract class User  {
         this.hasPermission = hasPermission;
     }
 
-    public void addManga(String mangaName, int mark) {
-    }
-
     public String getUsername() {
         return username;
     }

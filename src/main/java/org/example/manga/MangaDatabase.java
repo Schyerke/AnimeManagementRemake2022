@@ -1,15 +1,16 @@
 package org.example.manga;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum MangaDatabase {
     INSTANCE;
 
-    private final Manga[] mangas = new Manga[100];
-    private int mangaCount;
+    private final List<Manga> mangas = new ArrayList<>();
 
-    public Manga[] findAll(){
+    public List<Manga> findAll(){
         return mangas;
     }
-
 
     // throws an IllegalArgumentException if the manga is already in the database
     public void save(Manga manga) {
@@ -17,39 +18,34 @@ public enum MangaDatabase {
         if (findByName(manga.name()) != null) {
             throw new IllegalArgumentException("Manga already in database");
         }
-        mangas[mangaCount++] = manga;
+        mangas.add(manga);
+        System.out.println("Manga added");
     }
 
     public Manga findByName(String name) {
         for (Manga manga : mangas) {
             if (manga.name().equals(name)) {
+                System.out.println("Found " + manga.name());
                 return manga;
             }
         }
+        System.out.println("No such manga");
         return null;
     }
 
     public void deleteByName(String name) {
-        for (int i = 0; i < mangaCount; i++) {
-            Manga manga = mangas[i];
-            if (manga.name().equals(name)) {
-                mangas[i] = mangas[mangaCount - 1];
-                mangas[mangaCount - 1] = null;
-                mangaCount--;
-                return;
-            }
+        Manga manga = findByName(name);
+        if (manga != null) {
+            mangas.remove(manga);
+            System.out.println("Manga deleted");
+        }
+        else {
+            System.out.println("No such manga");
         }
     }
 
     public void deleteByManga(Manga manga) {
-        for (int i = 0; i < mangaCount; i++) {
-            Manga m = mangas[i];
-            if (m.equals(manga)) {
-                mangas[i] = mangas[mangaCount - 1];
-                mangas[mangaCount - 1] = null;
-                mangaCount--;
-                return;
-            }
-        }
+        mangas.remove(manga);
+        System.out.println("Manga deleted");
     }
 }

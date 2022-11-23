@@ -26,10 +26,18 @@ public enum MangaManager {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter manga name: ");
         String name = scanner.nextLine();
-        System.out.println("Enter manga genre: ");
-        String genre = scanner.nextLine();
+        Genre userGenre;
+        while(true){
+            System.out.println("Enter manga genre: ");
+            String genre = scanner.nextLine();
+            userGenre = Genre.map(genre);
+            if(userGenre != null){
+                break;
+            }
+            System.out.println("No such genre");
+        }
         System.out.println("Enter manga rating: ");
         String rating = scanner.nextLine();
-        return new Manga(name, Genre.valueOf(genre.toLowerCase()), rating);
+        return new Manga(name, userGenre, rating);
     }
 }

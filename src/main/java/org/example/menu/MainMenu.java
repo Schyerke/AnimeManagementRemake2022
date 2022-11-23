@@ -11,15 +11,10 @@ import static org.example.console.ConsoleUtils.clearScreen;
 
 public class MainMenu  {
 
-    private final String MESSAGE;
     private static final String EXIT = "exit";
 
-    public MainMenu(){
-        MESSAGE = getUserMessage();
-    }
-
     public void start() {
-        System.out.println(MESSAGE);
+        System.out.println(getUserMessage());
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         clearScreen();
@@ -27,7 +22,7 @@ public class MainMenu  {
             System.out.println("Exiting...");
             System.exit(0);
         }
-        if(SessionManager.isLoggedIn()){
+        if(SessionManager.INSTANCE.isLoggedIn()){
             userLoggedInChoice(input);
         } else{
             userNotLoggedInChoice(input);
@@ -42,14 +37,15 @@ public class MainMenu  {
             case "3" -> MangaManager.INSTANCE.addManga();
             case "4" -> AnimeManager.INSTANCE.deleteAnime();
             case "5" -> MangaManager.INSTANCE.deleteMangaByName();
+            case "6" -> SessionManager.INSTANCE.logout();
             default -> System.out.println("Invalid input");
         }
     }
 
     private void userNotLoggedInChoice(String input){
         switch (input) {
-            case "1" -> SessionManager.login();
-            case "2" -> SessionManager.signup();
+            case "1" -> SessionManager.INSTANCE.login();
+            case "2" -> SessionManager.INSTANCE.signup();
             default -> System.out.println("Invalid input");
         }
     }
@@ -57,14 +53,15 @@ public class MainMenu  {
 
     private String getUserMessage(){
         StringBuilder sb = new StringBuilder();
-        if(SessionManager.isLoggedIn()){
-            sb.append("Welcome back, ").append(SessionManager.getUser().getUsername()).append("!\n");
+        if(SessionManager.INSTANCE.isLoggedIn()){
+            sb.append("Welcome back, ").append(SessionManager.INSTANCE.getUser().getUsername()).append("!\n");
             sb.append("""
                     1: View your profile
                     2: Add a new anime
                     3: Add a new manga
                     4: Delete an anime
                     5: Delete a manga
+                    6: Logout
                     "exit": Exit the program
                     """);
         } else {

@@ -25,11 +25,18 @@ public enum AnimeManager {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter anime name: ");
         String name = scanner.nextLine();
-        System.out.println("Enter anime genre: ");
-        String genre = scanner.nextLine();
+        Genre userGenre;
+        while(true){
+            System.out.println("Enter anime genre: ");
+            String genre = scanner.nextLine();
+            userGenre = Genre.map(genre);
+            if(userGenre != null){
+                break;
+            }
+            System.out.println("No such genre");
+        }
         System.out.println("Enter anime rating: ");
         String rating = scanner.nextLine();
-        return new Anime(name, Genre.valueOf(genre.toLowerCase()), rating);
+        return new Anime(name, userGenre, rating);
     }
-
 }
